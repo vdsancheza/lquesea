@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'RottenTCollector';
+  title = 'lquesea';
   sub: any;
 
   constructor(private categoryActions: CategoryActions,

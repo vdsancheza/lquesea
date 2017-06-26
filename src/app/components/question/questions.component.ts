@@ -30,7 +30,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.sub2 = this.categoryDictObs.subscribe(cd => this.categoryDictionary = cd);
 
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     if (this.sub ) {
       this.sub.unsubscribe();
     }

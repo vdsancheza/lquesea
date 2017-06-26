@@ -148,6 +148,7 @@ export class QuestionAddUpdateComponent implements OnInit, OnDestroy {
       return;
     //get question object from the forms
     let question: Question = this.getQuestionFromFormValue(this.questionAddUpdateForm.value);
+    console.log(this.questionAddUpdateForm.value);
     //call saveQuestion
     this.saveQuestion(question);
   }
