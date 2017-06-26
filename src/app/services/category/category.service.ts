@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http , Response }	from '@angular/http';
+import { Http }	from '@angular/http';
 import { Observable }	from 'rxjs/Rx';
 import { environment }	from 'environments/environment';
 import { Category } from '../../models/category';
@@ -16,7 +16,7 @@ export class CategoryService {
 
   getCategories() : Observable< Category[] > {
     let url = this.url;
-    console.log("getCategories");
+    console.log("SERVICE: getCategories");
     return this.http.get(url)
             .map(
               response => response.json()

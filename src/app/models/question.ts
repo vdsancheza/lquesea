@@ -1,4 +1,5 @@
-import { Category } from './category'
+import { Category } from './category';
+import { Answer } from './answer';
 
 export class Question {
   id: number;
@@ -8,6 +9,7 @@ export class Question {
   explanation?: string;
   tags: string[];
   categories: Category[];
+  categoryIds: number[];
   published: boolean;
   status: QuestionStatus;
   createdBy?: string;
@@ -16,6 +18,7 @@ export class Question {
   lastUpdatedOn?: Date;
   approvedBy1?: string;
   approvedOn?: Date;
+
   
   constructor() {
     this.id = 0;
@@ -23,16 +26,13 @@ export class Question {
     this.ordered = false;
     this.tags = [];
     this.categories = [];
+    this.categoryIds = [];
     this.published = false;
     this.status = QuestionStatus.SAVED;
   }
 }
 
-class Answer {
-  id: number;
-  answerText: string;
-  correct: boolean;
-}
+
 
 export enum QuestionStatus {
   SAVED,
