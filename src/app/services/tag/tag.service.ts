@@ -2,24 +2,25 @@ import { Injectable } from '@angular/core';
 import { Http }	from '@angular/http';
 import { Observable }	from 'rxjs/Rx';
 import { environment }	from 'environments/environment';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import '../../rxjs-extensions';
 
 @Injectable()
 export class TagService {
 	private url: string;
 
-  constructor(private http: Http) { 
+  constructor(private _angularFDB: AngularFireDatabase) { 
 
-  	this.url = environment.apiUrl + '/tagList'
+  	this.url = '/tagList'
   }
 
   getTags() : Observable< string[] > {
     let url = this.url;
     console.log("SERVICE: getTags");
-    return this.http.get(url)
-            .map(
-              response => response.json()
-              );
+    return this._angularFDB.list(url)
+                            .map(
+                              t => t.map(a => a["$value"])
+                              );
   }
 
 }

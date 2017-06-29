@@ -8,7 +8,7 @@ import { AppStore } from '../../state-management/state/app.store';
 @Component({
   selector: 'category-list',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss']
+  styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {
   private categoriesObs: Observable<Category[]>;

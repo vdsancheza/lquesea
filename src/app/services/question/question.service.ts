@@ -1,37 +1,44 @@
 import { Injectable } from '@angular/core';
 import { Http , Response }	from '@angular/http';
 import { Observable }	from 'rxjs/Rx';
-import { environment }	from 'environments/environment';
 import { Question } from '../../models/question';
-import { CategoryService } from '../category/category.service';
-import { Category } from '../../models/category';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { QuestionActions } from '../../state-management/actions';
+import { AppStore } from '../../state-management/state/app.store';
+import { Store } from '@ngrx/store';
 import '../../rxjs-extensions';
 
 @Injectable()
 export class QuestionService {
   private url: string;
 
-  constructor(private http: Http, private _categoryS: CategoryService) { 
+  constructor(private _angularFDB: AngularFireDatabase, 
+              private _questionAct: QuestionActions, 
+              private _appStore: Store<AppStore>) { 
 
-    this.url= environment.apiUrl + '/questions'
+    this.url=  '/questions'
   }
 
   getQuestions(): Observable<Question[]> {
       let url = this.url;
       console.log('SERVICE: getQuestions');
-      return this.http.get(url)
-               .map(
-                 res => res.json() 
-                 );
+      return this._angularFDB.list(url);
   }
 
-  saveQuestion(question: Question): Observable<Question> {
+  saveQuestion(question: Question) {
       console.log('SERVICE: saveQuestion');
       let url = this.url;
-      return this.http.post(url, question)
-                      .map(
-                        res => res.json()
-                      );
+       this._angularFDB.list(url)
+        .push(question)
+        .then(
+          (success) => {
+            this._appStore.dispatch(this._questionAct.addQuestionSuccess());
+          },
+          (error: Error) => {
+              console.log(error);
+          }
+
+        );
   }
 
 }
