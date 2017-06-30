@@ -22,11 +22,10 @@ export class AppComponent {
               public snackBar: MdSnackBar
               ) {
       this.sub = store.select(s => s.questionSaveStatus)
-                      .subscribe((status) => {
-                        if(status === "SUCCESS")
-                          this.snackBar.open("Question saved!", "", {duration: 2000});
-                        if(status === "IN PROGRESS")
-                          this.router.navigate(['/questions']);
+                      .filter(status => status === "SUCCESS")
+                      .subscribe(() => {
+                        this.snackBar.open("Question saved!", "", {duration: 2000});
+                        this.router.navigate(['/questions']);
                       });
   }
   ngOnInit () {
