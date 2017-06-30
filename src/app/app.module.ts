@@ -27,7 +27,9 @@ import { default as reducer } from './state-management/state/app.store';
 
 //firebase
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
+// Firebase Config
 var firebaseConfig = {
     apiKey: "AIzaSyDYnAsJXasESdwZWKD3f_P6msBsqDzJwXM",
     authDomain: "lquesea-a798c.firebaseapp.com",
@@ -72,7 +74,9 @@ var firebaseConfig = {
     QuestionService,
     CategoryActions,
     QuestionActions,
-    TagActions
+    TagActions,
+    AngularFireDatabase,
+    AngularFireModule
 
   ],
   bootstrap: [AppComponent]
