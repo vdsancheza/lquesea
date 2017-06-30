@@ -36,11 +36,11 @@ export class QuestionActions {
     };
   }
 
-  addQuestionSuccess(): Action {
+  addQuestionSuccess(question: Question): Action {
     console.log('ACTION: ADD_QUESTION_SUCCESS');
     return {
       type: QuestionActions.ADD_QUESTION_SUCCESS,
-      payload: null
+      payload: question
     };
   }
 

@@ -10,6 +10,8 @@ export const QuestionsReducer = (state: any = [], action: Action): Question[] =>
   switch (action.type) {
     case QuestionActions.LOAD_QUESTIONS_SUCCESS:
       return action.payload;
+    case QuestionActions.ADD_QUESTION_SUCCESS:
+      return [...state, ...action.payload];
     default:
       return state;
   }

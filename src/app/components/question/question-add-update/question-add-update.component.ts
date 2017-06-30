@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormArray, FormControl, ValidatorFn } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { AppStore } from '../../../state-management/state/app.store';
-import { QuestionActions } from '../../../state-management/actions';
+import { Router } from '@angular/router';
+
 import { Question, Category, Answer } from '../../../models';
+import { CategoryService, QuestionService, TagService } from '../../../services';
 
 
 @Component({
@@ -27,26 +26,21 @@ export class QuestionAddUpdateComponent implements OnInit, OnDestroy {
   private autoTags: string[] = []; 
   private enteredTags: string[] = [];
 
-  private tagsObs: Observable<string[]>;
-  private categoriesObs: Observable<Category[]>;
-
   constructor(private _fb: FormBuilder, 
-              private _store: Store<AppStore>, 
-              private _questionA: QuestionActions) {  
-    this.tagsObs= _store.select(s => s.tags);
-    this.categoriesObs = _store.select(s => s.categories);
-
-              }
+              private _categoryS: CategoryService, 
+              private _questionS: QuestionService, 
+              private _tagS: TagService, 
+              private router: Router) {  }
 
   ngOnInit() {
 
     this.question = new Question();
     this.createForm(this.question);
     // get all Categories
-    this.sub = this.categoriesObs
+    this.sub = this._categoryS.getCategories()
                    .subscribe(categories => this.categories = categories);
     // get all tags
-    this.sub2 = this.tagsObs
+    this.sub2 = this._tagS.getTags()
                    .subscribe(tags => this.tags = tags);
 
     let questionControl = this.questionAddUpdateForm.get('questionText');
@@ -141,7 +135,10 @@ export class QuestionAddUpdateComponent implements OnInit, OnDestroy {
   }
 
   saveQuestion(question: Question) {
-    this._store.dispatch(this._questionA.addQuestion(question));
+    this._questionS.saveQuestion(question)
+                    .subscribe(response => {
+                      this.router.navigate(['/questions']);
+                    });
     
     }
 
